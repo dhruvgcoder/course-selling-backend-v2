@@ -18,9 +18,11 @@ if(status === "connected"){
 }
 else{
     console.error("Server Crashed - Unable to connect backend" )
+    process.exit(1);
         }
     }catch(err){
         console.log(err.message)
+        
         
     }
 };
