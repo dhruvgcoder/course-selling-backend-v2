@@ -1,9 +1,15 @@
 const express = require("express")
 const app = express()
+
 const connectDB = require("./db/db")
+const userRouter = require("./routes/user.routes")
+// const {adminRouter} = require("./routes/admin.routes")
+// const {courseRouter} = require("./routes/course.routes")
+
 const dotenv = require("dotenv")
 dotenv.config()
 const PORT = process.env.PORT || 3000;
+
 app.use(express.json()) 
 
 async function startServer(){
@@ -25,8 +31,12 @@ else{
     }
 };
 
+app.use("/user",userRouter);
+// app.use("/admin",adminRouter);
+// app.use("/course",courseRouter);
+
 app.get('/',function(req,res){
-    res.send("API is running..")
+    res.send("Health Check : API is running..")
 })
 
 startServer();
