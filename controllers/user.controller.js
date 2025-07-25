@@ -5,15 +5,18 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const dotenv = require("dotenv")
 dotenv.config()
-const verifyJWT = process.env.JWT_SECRET
+const secretJWT = process.env.JWT_SECRET
 
 const getProfile = function(req,res){
+    res.json({
+        msg : "You are on profile section"
+    });
 
 };
 
 const userSignUp = async function(req,res){
-const validateInput = userInput(req,res);
-// if(!validateInput) return;
+const validateInput = userInput(req.body);
+if(!validateInput) return;
 const { 
     firstName , 
     lastName ,
@@ -51,13 +54,14 @@ if(!checkUser){
     })
 }
 const checkPassword = await bcrypt.compare(password , checkUser.password)
+console.log(checkPassword)
 if(checkPassword){
     const token = jwt.sign({
         id : checkUser._id.toString()
-    }, verifyJWT)
+    }, secretJWT);
     return res.json({
-        msg : token,
-        signinStaus : "Success"
+    msg : token,
+    signinStaus : "Success"
     });
 }else{
     res.json({
@@ -65,8 +69,12 @@ if(checkPassword){
         signinStatus : "Error"
         });
     }
+
 };
+
+
 const purchaseCourse = function(req,res){
+    
 
 };
 const myCourses = function(req,res){
